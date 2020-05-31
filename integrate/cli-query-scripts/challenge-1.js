@@ -8,18 +8,23 @@ const sqlite3 = require('sqlite3').verbose();
 
 const DB_PATH = path.join(__dirname, '..', 'chinook.sqlite');
 
-const db = new sqlite3.Database(DB_PATH);
+const userInput = {
+  name : process.argv[2],
+  
+};
 
-const userInput = {};
+const queryString = `
+  SELECT lastName 
+  FROM employees where firstName = "${userInput.name}";`;
 
-const queryString = ``;
 
-db.all(queryString, (err, rows) => {
-  if (err) {
-    console.error(err);
-  } else {
-    console.log(rows);
-  }
+(async () => {
+  try {
+    // open the database
+    const db = await sqlite.open({
+      filename: DB_PATH,
+      driver: sqlite3.Database
+    });
 
   db.close();
 });
