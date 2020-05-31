@@ -10,15 +10,22 @@ const DB_PATH = path.join(__dirname, '..', 'chinook.sqlite');
 
 const db = new sqlite3.Database(DB_PATH);
 
-const userInput = {};
+const userInput = {
+  table : process.argv[2],
+  column : process.argv[3],
+  searchStr : process.argv[4],
+  numberOfEntries : process.argv[5] 
+};
 
-const queryString = ``;
+const queryString = `
+SELECT * FROM ${userInput.table} WHERE ${userInput.column} = "${userInput.searchStr}" limit ${userInput.numberOfEntries}
+`;
 
 db.all(queryString, (err, rows) => {
   if (err) {
     console.error(err);
   } else {
-    console.log(rows);
+    console.table(rows);
   }
 
   db.close();
